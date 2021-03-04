@@ -20,7 +20,7 @@ const parseRange = (query) => {
   return query;
 };
 
-// GET Products
+// POST Products
 router.post("/products", async (req, res, next) => {
   try {
     
@@ -38,5 +38,24 @@ router.post("/products", async (req, res, next) => {
   }
 });
 
+// POST products by id
+router.post("/productsById", async (req, res) => {
+  try {
+    let { ids } = req.body;
+    let products;
+
+    if(!Array.isArray(ids))
+      return res.status.json({ msg: "invalid request" });
+    
+    products = await Product.getProductsById(ids);
+    console.log(products, ids);
+
+    return res.json({ msg: "got products", products });
+    
+
+  } catch (error) {
+    throw error;
+  }
+});
 
 module.exports = router;

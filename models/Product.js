@@ -46,3 +46,17 @@ module.exports.getAllProducts = async (query, sort) => {
     throw error;
   }
 };
+
+module.exports.getProductsById = async (ids) => {
+  try {
+
+    let parsedIds = ids.map(id => mongoose.Types.ObjectId(id));
+
+    return await Product.find({
+      '_id': { $in : [...parsedIds] }
+    });
+  } catch (error) {
+    console.log("server error: ", error);
+    return [];
+  }
+}
