@@ -35,19 +35,12 @@ const productSchema = mongoose.Schema({
 
 const Product = (module.exports = mongoose.model("Product", productSchema));
 
-module.exports.getAllProducts = async () => {
+module.exports.getAllProducts = async (query, sort) => {
 
   try {
+    
     // String Matching Regex
-    return await Product.find({ color: 'Black', size: {
-      '$regex': 'XL',
-      "$options": 'i'
-    } });
-
-    // return await Product.find({ size: {
-    //     $elemMatch: { $eq: 1 },
-    //   } 
-    // });
+    return await Product.find(query).sort(sort);
 
   } catch (error) {
     throw error;
